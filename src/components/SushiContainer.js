@@ -40,7 +40,10 @@ function SushiContainer(props) {
     <div className="belt">
        {sushiToDisplay.map((sushi)=>{
         return(
-          <Sushi sushi={sushi} key={sushi.id} onEatSushi={handleEatSushi} />
+          <Sushi sushi={sushi} key={sushi.id} 
+          onEatSushi={handleEatSushi} 
+          remainingBudget={remainingBudget}
+          />
         )
        })}
       {sushiToDisplay.length<sushiPerPage?null:(
