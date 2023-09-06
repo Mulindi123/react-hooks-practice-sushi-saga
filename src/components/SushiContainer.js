@@ -7,6 +7,9 @@ function SushiContainer(props) {
   const [sushis, setSushi] =useState([])
   const [currentPage, setCurrentPage]=useState(1)
   const sushiPerPage = 4
+  const budget = 100
+
+  const [remainingBudget, setRemainingBudget] =useState(budget)
 
     // Calculate the start and end index for the current page
     const startIndex=(currentPage-1)*sushiPerPage
@@ -19,10 +22,11 @@ function SushiContainer(props) {
       setCurrentPage((prevPage)=>prevPage+1)
      }
 
-     
-
-
-
+     const handleEatSushi=(price)=>{
+      if(remainingBudget>=price){
+        setRemainingBudget(prevBudget=>prevBudget-price)
+      }
+     }
 
   useEffect(()=>{
     fetch("http://localhost:3001/sushis")
@@ -36,13 +40,13 @@ function SushiContainer(props) {
     <div className="belt">
        {sushiToDisplay.map((sushi)=>{
         return(
-          <Sushi sushi={sushi} key={sushi.id}/>
+          <Sushi sushi={sushi} key={sushi.id} onEatSushi={handleEatSushi} />
         )
        })}
       {sushiToDisplay.length<sushiPerPage?null:(
         <MoreButton onHandleNextPage={handleNextPage} />
       )}
-   
+    {props.children(remainingBudget)}
     </div>
   );
 }

@@ -1,11 +1,14 @@
 
 import React, { useState } from "react";
 
-function Sushi({sushi}) {
+function Sushi({sushi, onEatSushi}) {
   const [isEaten, setIsEaten]=useState(false)
 
   function toggleIsEaten(){
-    setIsEaten(!isEaten)
+    if(!isEaten){
+    setIsEaten(true)
+    onEatSushi(sushi.price)
+    }
   }
 
 
